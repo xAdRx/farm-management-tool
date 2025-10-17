@@ -13,7 +13,8 @@ public class Field{
     private Boolean isFertilized;
     private Boolean isLimed;
     private Integer growthStage;
-    private Integer soilQualityIndex;
+    private Integer classOfSoil;
+    private Double predictedYield;
 
     public Field(String fieldName, Double areaInHectares) {
         this.fieldName = fieldName;
