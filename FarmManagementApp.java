@@ -37,6 +37,16 @@ public class Field{
         this.areaInHectares = areaInHectares;
     }
 
+    public void updateGrowthStage(int percentage) {
+        if (percentage < 0) {
+            this.growthStage = 0; // Minimum growth stage
+        } else if (percentage > 100) {
+            this.growthStage = 100; // Maximum growth stage
+        } else {
+            this.growthStage = percentage; // Set to the given percentage
+        }
+    }
+
     @Override
     public String toString() {
         return "Field{" +
