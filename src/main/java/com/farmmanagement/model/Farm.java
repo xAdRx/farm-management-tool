@@ -1,6 +1,7 @@
 package com.farmmanagement.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Farm {
@@ -43,7 +44,7 @@ public class Farm {
     }
 
     public List<Animal> getAnimals() {
-        return animals;
+        return Collections.unmodifiableList(animals);
     }
 
     public void addAnimal(Animal animal) {
@@ -55,7 +56,7 @@ public class Farm {
     }
 
     public List<Crop> getCrops() {
-        return crops;
+        return Collections.unmodifiableList(crops);
     }
 
     public void addCrop(Crop crop) {
