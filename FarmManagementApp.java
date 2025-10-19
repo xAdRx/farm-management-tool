@@ -285,11 +285,30 @@ public class FarmManagementApp {
             return;
         }
 
-        System.out.println("=== Farm Status ===");
-        System.out.println("Farm: " + currentFarm.getName());
+        System.out.println("What status do you want to see?");
+        System.out.println("1. Get all fields ready to be harvested");
+        System.out.println("2. Get all fields ready to be seeded");
+        System.out.println("3. Get all fields required to be fertilized");
+        System.out.println("4. Get all fields required to be limed");
+        System.out.println("5. Calculate required expenses");
+        System.out.println("0. Exit to main menu");
+    }
+
+    private static void showFarmInformation() {
+        if (currentFarm == null) {
+            System.out.println("Please create a farm first!");
+            return;
+        }
+
+        System.out.println("Farm Information:");
+        System.out.println("Name: " + currentFarm.getName());
         System.out.println("Location: " + currentFarm.getLocation());
-        System.out.println("Total Area: " + currentFarm.getTotalAreaInHectares() + " hectares");
-        System.out.println("Number of fields: " + currentFarm.getFields().size());
+        System.out.println("Total Area (hectares): " + currentFarm.getTotalAreaInHectares());
+        System.out.println("Number of Fields: " + currentFarm.getFields().size());
+        System.out.println("Fields:");
+        for (Field field : currentFarm.getFields()) {
+            System.out.println(" - " + field);
+        }
     }
 
     public static void main(String[] args) {
@@ -305,6 +324,7 @@ public class FarmManagementApp {
             System.out.println("1. Farm management");
             System.out.println("2. Field management");
             System.out.println("3. Status menu");
+            System.out.println("4. Show farm information");
             System.out.println("0. Exit");
             System.out.print("Your choice: ");
 
@@ -314,6 +334,7 @@ public class FarmManagementApp {
                 case 1 -> handleFarmManagement();
                 case 2 -> handleFieldManagement();
                 case 3 -> showStatus();
+                case 4 -> showFarmInformation();
                 case 0 -> {
                     running = false;
                     System.out.println("Exiting...");
