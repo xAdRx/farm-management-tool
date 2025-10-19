@@ -1,9 +1,7 @@
-package com.farmmanagement;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.ArrayList; // Allows to use Array for fields
+import java.util.Collections; // Allows to return unmodifiable list
+import java.util.List;  // Allows to use List for fields
+import java.util.Scanner; // Allows to read user input
 
 public class FarmManagementApp {
     private static Farm currentFarm = null;
@@ -131,26 +129,61 @@ public class FarmManagementApp {
                     ", totalAreaInHectares=" + totalAreaInHectares +
                     '}';
         }
+
+        public String toJson() {
+            StringBuilder fieldsJson = new StringBuilder();
+            for (Field field : fields) {
+                fieldsJson.append(field.toJson()).append(",");
+            }
+            if (fieldsJson.length() > 0) {
+                fieldsJson.setLength(fieldsJson.length() - 1); // Remove trailing comma
+            }
+            return "{" +
+                    "\"name\":\"" + name + "\"," +
+                    "\"location\":\"" + location + "\"," +
+                    "\"totalAreaInHectares\":" + totalAreaInHectares + "," +
+                    "\"fields\":[" + fieldsJson.toString() + "]" +
+                    "}";
+        }
     }
 
-    private static void saveFarmInfo() {
-        // Placeholder for saving farm info to storage
-        System.out.println("Saving farm information... (not implemented)");
-    }
+    private static void randomizeFarmInfo() {
+        String[] farmNames = {"Sloneczne Hektary", "Farma na wzgorzu", "Ranczo w dolinie", "Lesna ostoja", "Zielony Zakatek"};
+        String[] locations = {"Mazowieckie", "Malopolskie", "Wielkopolskie", "Lubelskie", "Podlaskie"};
 
-    private static void loadFarmInfo() {
-        // Placeholder for loading farm info from storage
-        System.out.println("Loading farm information... (not implemented)");
+        String randomName = farmNames[(int) (Math.random() * farmNames.length)];
+        String randomLocation = locations[(int) (Math.random() * locations.length)];
+
+        currentFarm = new Farm(randomName, randomLocation);
+
+        System.out.println("Farm information randomized successfully!");
     }
 
     private static void createNewFarm() {
-        System.out.print("Enter farm name: ");
-        String name = scanner.nextLine();
-        System.out.print("Enter farm location: ");
-        String location = scanner.nextLine();
-        currentFarm = new Farm(name, location);
-        System.out.println("New farm created successfully!");
-        saveFarmInfo();
+        System.out.println("Would you like to create farm manually or randomize it?");
+        System.out.println("1. Manually");
+        System.out.println("2. Randomly");
+        System.out.println("0. Exit to main menu");
+        System.out.print("Your choice: ");
+        int choice = scanner.nextInt();
+        switch (choice) {
+            case 0 -> {
+            }
+            case 1 -> {
+                System.out.print("Enter farm name: ");
+                String name = scanner.nextLine();
+                System.out.print("Enter farm location: ");
+                String location = scanner.nextLine();
+                currentFarm = new Farm(name, location);
+                System.out.println("New farm created successfully!");
+            }
+            case 2 -> {
+                randomizeFarmInfo();
+            }
+            default -> {
+                System.out.println("Invalid option. Returning to main menu.");
+            }
+        }
     }
 
     private static void editFarmInfo() {
@@ -159,8 +192,10 @@ public class FarmManagementApp {
             System.out.println("1. Change farm name [" + currentFarm.getName() + "]: ");
             System.out.println("2. Change farm location [" + currentFarm.getLocation() + "]: ");
             System.out.println("0. Back to farm management menu");
+            System.out.print("Your choice: ");
+
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+
             switch (choice) {
                 case 1 -> {
                     System.out.print("Enter new farm name: ");
@@ -179,7 +214,6 @@ public class FarmManagementApp {
                 }
                 default -> System.out.println("Invalid option.");
             }
-            saveFarmInfo();
         }
     }
 
@@ -190,16 +224,14 @@ public class FarmManagementApp {
             System.out.println("Current farm: " + currentFarm.getName());
             System.out.println("1. Create new farm");
             System.out.println("2. Change farm information");
-            System.out.println("3. Load farm information");
             System.out.println("0. Back to main menu");
+            System.out.print("Your choice: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
 
             switch (choice) {
                 case 1 -> createNewFarm();
                 case 2 -> editFarmInfo();
-                case 3 -> loadFarmInfo();
                 default -> { /* ignore / back */ }
             }
         }
@@ -216,9 +248,9 @@ public class FarmManagementApp {
         System.out.println("2. Remove field");
         System.out.println("3. View all fields");
         System.out.println("0. Back to main menu");
+        System.out.print("Your choice: ");
 
         int choice = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
 
         switch (choice) {
             case 1 -> {
@@ -293,7 +325,6 @@ public class FarmManagementApp {
             System.out.print("Your choice: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
 
             switch (choice) {
                 case 1 -> handleFarmManagement();
