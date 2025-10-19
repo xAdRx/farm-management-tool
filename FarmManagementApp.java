@@ -129,22 +129,6 @@ public class FarmManagementApp {
                     ", totalAreaInHectares=" + totalAreaInHectares +
                     '}';
         }
-
-        public String toJson() {
-            StringBuilder fieldsJson = new StringBuilder();
-            for (Field field : fields) {
-                fieldsJson.append(field.toJson()).append(",");
-            }
-            if (fieldsJson.length() > 0) {
-                fieldsJson.setLength(fieldsJson.length() - 1); // Remove trailing comma
-            }
-            return "{" +
-                    "\"name\":\"" + name + "\"," +
-                    "\"location\":\"" + location + "\"," +
-                    "\"totalAreaInHectares\":" + totalAreaInHectares + "," +
-                    "\"fields\":[" + fieldsJson.toString() + "]" +
-                    "}";
-        }
     }
 
     private static void randomizeFarmInfo() {
