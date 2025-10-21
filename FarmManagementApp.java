@@ -58,10 +58,8 @@ public class FarmManagementApp {
 
         @Override
         public String toString() {
-            return "Field{" +
-                    "fieldName='" + fieldName + '\'' +
-                    ", areaInHectares=" + areaInHectares +
-                    '}';
+            return "  - Name = '" + fieldName + '\'' +
+                    ", areaInHectares = " + areaInHectares;
         }
     }
 
@@ -121,6 +119,14 @@ public class FarmManagementApp {
             }
         }
 
+        private void listAllFields() {
+        System.out.println("Fields in the farm:");
+        for (Field field : currentFarm.getFields()) {
+            System.out.println(field);
+        }
+        System.out.println();
+    }
+
         @Override
         public String toString() {
             return "Farm{" +
@@ -147,31 +153,37 @@ public class FarmManagementApp {
         System.out.println("Would you like to create farm manually or randomize it?");
         System.out.println("1. Manually");
         System.out.println("2. Randomly");
-        System.out.println("0. Exit to main menu");
+        System.out.println("0. Exit to farm managment menu");
         System.out.print("Your choice: ");
         int choice = scanner.nextInt();
-        switch (choice) {
-            case 0 -> {
-            }
-            case 1 -> {
-                System.out.print("Enter farm name: ");
-                String name = scanner.nextLine();
-                System.out.print("Enter farm location: ");
-                String location = scanner.nextLine();
-                currentFarm = new Farm(name, location);
-                System.out.println("New farm created successfully!");
-            }
-            case 2 -> {
-                randomizeFarmInfo();
-            }
-            default -> {
-                System.out.println("Invalid option. Returning to main menu.");
+        boolean running = true;
+        while (running){
+            switch (choice) {
+                case 0 -> {
+                    running = false;
+                    System.out.println("Returning to farm management menu.");
+                }
+                case 1 -> {
+                    System.out.print("Enter farm name: ");
+                    String name = scanner.next();
+                    System.out.print("Enter farm location: ");
+                    String location = scanner.next();
+                    currentFarm = new Farm(name, location);
+                    System.out.println("New farm created successfully!");
+                }
+                case 2 -> {
+                    randomizeFarmInfo();
+                }
+                default -> {
+                    System.out.println("Invalid option. Returning to main menu.");
+                }
             }
         }
     }
 
     private static void editFarmInfo() {
-        while (true) {
+        boolean running = true;
+        while (running){
             System.out.println("What information you want to change:");
             System.out.println("1. Change farm name [" + currentFarm.getName() + "]: ");
             System.out.println("2. Change farm location [" + currentFarm.getLocation() + "]: ");
@@ -179,22 +191,22 @@ public class FarmManagementApp {
             System.out.print("Your choice: ");
 
             int choice = scanner.nextInt();
-
             switch (choice) {
                 case 1 -> {
                     System.out.print("Enter new farm name: ");
-                    String name = scanner.nextLine();
+                    String name = scanner.next();
                     currentFarm.setName(name);
                     System.out.println("Farm name updated successfully!");
                 }
                 case 2 -> {
                     System.out.print("Enter new farm location: ");
-                    String location = scanner.nextLine();
+                    String location = scanner.next();
                     currentFarm.setLocation(location);
                     System.out.println("Farm location updated successfully!");
                 }
                 case 0 -> {
-                    return;
+                    running = false;
+                    System.out.println("Returning to farm management menu.");
                 }
                 default -> System.out.println("Invalid option.");
             }
@@ -205,18 +217,25 @@ public class FarmManagementApp {
         if (currentFarm == null) {
             createNewFarm();
         } else {
-            System.out.println("Current farm: " + currentFarm.getName());
-            System.out.println("1. Create new farm");
-            System.out.println("2. Change farm information");
-            System.out.println("0. Back to main menu");
-            System.out.print("Your choice: ");
+            boolean running = true;
+            while (running) {
+                System.out.println("Current farm: " + currentFarm.getName());
+                System.out.println("1. Create new farm");
+                System.out.println("2. Change farm information");
+                System.out.println("0. Back to main menu");
+                System.out.print("Your choice: ");
 
-            int choice = scanner.nextInt();
+                int choice = scanner.nextInt();
 
-            switch (choice) {
-                case 1 -> createNewFarm();
-                case 2 -> editFarmInfo();
-                default -> { /* ignore / back */ }
+                switch (choice) {
+                    case 1 -> createNewFarm();
+                    case 2 -> editFarmInfo();
+                    case 0 -> {
+                        running = false;
+                        System.out.println("Returning to farm management menu.");
+                    }
+                    default -> System.out.println("Invalid option. Please try again.");
+                }
             }
         }
     }
@@ -227,55 +246,75 @@ public class FarmManagementApp {
             return;
         }
 
-        System.out.println("Field Management:");
-        System.out.println("1. Add new field");
-        System.out.println("2. Remove field");
-        System.out.println("3. View all fields");
-        System.out.println("0. Back to main menu");
-        System.out.print("Your choice: ");
+        boolean running = true;
+        while (running) {
+            System.out.println("Field Management:");
+            System.out.println("1. Add new field");
+            System.out.println("2. Edit field");
+            System.out.println("3. Remove field");
+            System.out.println("4. View all fields");
+            System.out.println("0. Back to main menu");
+            System.out.print("Your choice: ");
 
-        int choice = scanner.nextInt();
+            int choice = scanner.nextInt();
 
-        switch (choice) {
-            case 1 -> {
-                System.out.print("Enter field name: ");
-                String fieldName = scanner.nextLine();
-                System.out.print("Enter area in hectares: ");
-                Double area = scanner.nextDouble();
-                System.out.print("Enter class of soil (1 - best, 6 - worst): ");
-                int classOfSoil = scanner.nextInt();
-                scanner.nextLine(); // consume newline
-                currentFarm.addField(new Field(fieldName, area, Integer.valueOf(classOfSoil)));
-                System.out.println("Field added successfully!");
-            }
-            case 2 -> {
-                System.out.println("Fields:");
-                for (Field field : currentFarm.getFields()) {
-                    System.out.println(field.getFieldName());
+            switch (choice) {
+                case 1 -> {
+                    System.out.print("Enter field name: ");
+                    String fieldName = scanner.next();
+                    System.out.print("Enter area in hectares: ");
+                    Double area = scanner.nextDouble();
+                    System.out.print("Enter class of soil (1 - best, 6 - worst): ");
+                    int classOfSoil = scanner.nextInt();
+                    currentFarm.addField(new Field(fieldName, area, Integer.valueOf(classOfSoil)));
+                    System.out.println("Field added successfully!");
                 }
-                System.out.print("Enter field name you want to remove: ");
-                String fieldName = scanner.nextLine();
-                Field fieldToRemove = null;
-                for (Field f : currentFarm.getFields()) {
-                    if (f.getFieldName().equals(fieldName)) {
-                        fieldToRemove = f;
-                        break;
+                case 2 -> {
+                    currentFarm.listAllFields();
+                    System.out.print("Enter field name you want to edit: ");
+                    String fieldName = scanner.next();
+                    Field fieldToEdit = null;
+                    for (Field f : currentFarm.getFields()) {
+                        if (f.getFieldName().equals(fieldName)) {
+                            fieldToEdit = f;
+                            break;
+                        }
+                    }
+                    if (fieldToEdit == null) {
+                        System.out.println("Field not found.");
+                    } else {
+                        currentFarm.removeField(fieldToEdit);
+                        System.out.println("Field removed successfully!");
                     }
                 }
-                if (fieldToRemove == null) {
-                    System.out.println("Field not found.");
-                } else {
-                    currentFarm.removeField(fieldToRemove);
-                    System.out.println("Field removed successfully!");
+                case 3 -> {
+                    currentFarm.listAllFields();
+                    System.out.println("Fields:");
+                    for (Field field : currentFarm.getFields()) {
+                        System.out.println(field.getFieldName());
+                    }
+                    System.out.print("Enter field name you want to remove: ");
+                    String fieldName = scanner.next();
+                    Field fieldToRemove = null;
+                    for (Field f : currentFarm.getFields()) {
+                        if (f.getFieldName().equals(fieldName)) {
+                            fieldToRemove = f;
+                            break;
+                        }
+                    }
+                    if (fieldToRemove == null) {
+                        System.out.println("Field not found.");
+                    } else {
+                        currentFarm.removeField(fieldToRemove);
+                        System.out.println("Field removed successfully!");
+                    }
                 }
-            }
-            case 3 -> {
-                System.out.println("Fields:");
-                for (Field field : currentFarm.getFields()) {
-                    System.out.println(field);
+                case 4 -> {
+                    currentFarm.listAllFields();
                 }
+                case 0 -> running = false;
+                default -> System.out.println("Invalid option. Please try again.");
             }
-            default -> { /* back to menu */ }
         }
     }
 
@@ -284,14 +323,31 @@ public class FarmManagementApp {
             System.out.println("Please create a farm first!");
             return;
         }
+        boolean running = true;
+        while (running) {
 
-        System.out.println("What status do you want to see?");
-        System.out.println("1. Get all fields ready to be harvested");
-        System.out.println("2. Get all fields ready to be seeded");
-        System.out.println("3. Get all fields required to be fertilized");
-        System.out.println("4. Get all fields required to be limed");
-        System.out.println("5. Calculate required expenses");
-        System.out.println("0. Exit to main menu");
+            System.out.println("What status do you want to see?");
+            System.out.println("1. Get all fields ready to be harvested");
+            System.out.println("2. Get all fields ready to be seeded");
+            System.out.println("3. Get all fields required to be fertilized");
+            System.out.println("4. Get all fields required to be limed");
+            System.out.println("5. Calculate required expenses");
+            System.out.println("0. Exit to main menu");
+            System.out.print("Your choice: ");
+            int choice = scanner.nextInt();
+            switch (choice) {
+                case 1 -> System.out.println("Functionality not implemented yet.");
+                case 2 -> System.out.println("Functionality not implemented yet.");
+                case 3 -> System.out.println("Functionality not implemented yet.");
+                case 4 -> System.out.println("Functionality not implemented yet.");
+                case 5 -> System.out.println("Functionality not implemented yet.");
+                case 0 -> {
+                    running = false;
+                    System.out.println("Returning to main menu.");
+                }
+                default -> System.out.println("Invalid option. Please try again.");
+            }
+        }
     }
 
     private static void showFarmInformation() {
@@ -331,10 +387,34 @@ public class FarmManagementApp {
             int choice = scanner.nextInt();
 
             switch (choice) {
-                case 1 -> handleFarmManagement();
-                case 2 -> handleFieldManagement();
-                case 3 -> showStatus();
-                case 4 -> showFarmInformation();
+                case 1 -> {
+                    System.out.println();
+                    System.out.println("==========");
+                    handleFarmManagement();
+                    System.out.println("==========");
+                    System.out.println();
+                }
+                case 2 -> {
+                    System.out.println();
+                    System.out.println("==========");
+                    handleFieldManagement();
+                    System.out.println("==========");
+                    System.out.println();
+                }
+                case 3 -> {
+                    System.out.println();
+                    System.out.println("==========");
+                    showStatus();
+                    System.out.println("==========");
+                    System.out.println();
+                }
+                case 4 -> {
+                    System.out.println();
+                    System.out.println("==========");
+                    showFarmInformation();
+                    System.out.println("==========");
+                    System.out.println();
+                }
                 case 0 -> {
                     running = false;
                     System.out.println("Exiting...");
