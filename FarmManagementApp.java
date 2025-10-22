@@ -98,7 +98,6 @@ public class FarmManagementApp {
         }
 
         public void changeTotalAreaInHectares(double areaInHectares) {
-            // use the passed parameter (was incorrectly using the field)
             this.totalAreaInHectares += areaInHectares;
         }
 
@@ -116,6 +115,44 @@ public class FarmManagementApp {
             if (field == null) return;
             if (this.fields.remove(field)) {
                 changeTotalAreaInHectares(-field.getAreaInHectares());
+            }
+        }
+
+        public void editField(Field field) {
+            if (field == null) return;
+            boolean running = true;
+
+            while (running){
+                System.out.println("What do you want to edit?");
+                System.out.println("1. Change field name [" + field.getFieldName() + "]: ");
+                System.out.println("2. Change field classOfSoil [" + field.classOfSoil + "]: ");
+                System.out.println("3. Change if field is fertilized [" + field.isFertilized + "]: ");
+                System.out.println("4. Change if field is limed [" + field.isLimed + "]: ");
+                System.out.println("5. Change if field is seeded [" + field.isSeeded + "]: ");
+                System.out.println("0. Back to field management menu");
+                System.out.print("Your choice: ");
+                int choice = scanner.nextInt();
+                switch (choice) {
+                    case 1 -> {
+                        System.out.println("Not implemented yet");
+                    }
+                    case 2 -> {
+                        System.out.println("Not implemented yet");
+                    }
+                    case 3 -> {
+                        System.out.println("Not implemented yet");
+                    }
+                    case 4 -> {
+                        System.out.println("Not implemented yet");
+                    }
+                    case 5 -> {
+                        System.out.println("Not implemented yet");
+                    }
+                    case 0 -> {
+                        running = false;
+                    }
+                    default -> System.out.println("Invalid option.");
+                }
             }
         }
 
@@ -150,14 +187,14 @@ public class FarmManagementApp {
     }
 
     private static void createNewFarm() {
-        System.out.println("Would you like to create farm manually or randomize it?");
-        System.out.println("1. Manually");
-        System.out.println("2. Randomly");
-        System.out.println("0. Exit to farm managment menu");
-        System.out.print("Your choice: ");
-        int choice = scanner.nextInt();
         boolean running = true;
         while (running){
+            System.out.println("Would you like to create farm manually or randomize it?");
+            System.out.println("1. Manually");
+            System.out.println("2. Randomly");
+            System.out.println("0. Exit to farm managment menu");
+            System.out.print("Your choice: ");
+            int choice = scanner.nextInt();
             switch (choice) {
                 case 0 -> {
                     running = false;
@@ -175,7 +212,7 @@ public class FarmManagementApp {
                     randomizeFarmInfo();
                 }
                 default -> {
-                    System.out.println("Invalid option. Returning to main menu.");
+                    System.out.println("Invalid option.");
                 }
             }
         }
@@ -283,7 +320,7 @@ public class FarmManagementApp {
                     if (fieldToEdit == null) {
                         System.out.println("Field not found.");
                     } else {
-                        currentFarm.removeField(fieldToEdit);
+                        currentFarm.editField(fieldToEdit);
                         System.out.println("Field removed successfully!");
                     }
                 }
