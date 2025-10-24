@@ -5,15 +5,15 @@ import java.util.Scanner; // Potrzebne do zbierania danych wejsciowych od uzytko
 
 public class FarmManagementApp {
     private static Farm currentFarm = null; // Bieżąca farma zarządzana w aplikacji
-    private static Scanner scanner = new Scanner(System.in); // Skaner do odczytu danych wejściowych od użytkownika
+    private final static Scanner scanner = new Scanner(System.in); // Skaner do odczytu danych wejściowych od użytkownika
 
     public static class Crop { // Klasa reprezentująca uprawę
-        private String name; // Nazwa uprawy
-        private Double expectedYieldPerHectare; // Oczekiwany plon na hektar
-        private Double priceOnSell; // Cena sprzedaży za tonę
-        private Double fertilizerCostPerHectare; // Koszt nawozu na hektar
-        private Double limeCostPerHectare; // Koszt wapna na hektar
-        private Double seedCostPerHectare; // Koszt nasion na hektar
+        private final String name; // Nazwa uprawy
+        private final  Double expectedYieldPerHectare; // Oczekiwany plon na hektar
+        private final  Double priceOnSell; // Cena sprzedaży za tonę
+        private final  Double fertilizerCostPerHectare; // Koszt nawozu na hektar
+        private final  Double limeCostPerHectare; // Koszt wapna na hektar
+        private final  Double seedCostPerHectare; // Koszt nasion na hektar
 
         public Crop(String name, Double expectedYieldPerHectare, Double priceOnSell, // Konstruktor klasy Crop
                     Double fertilizerCostPerHectare, Double limeCostPerHectare, Double seedCostPerHectare) {
@@ -127,9 +127,9 @@ public class FarmManagementApp {
 
         public void setClassOfSoil(Integer classOfSoil) { // Mutator do klasy gleby pola
             if (classOfSoil < 1){ // Sprawdzenie, czy klasa gleby jest w zakresie 1-6
-                classOfSoil = 1;
+                this.classOfSoil = 1;
             } else if (classOfSoil > 6){
-                classOfSoil = 6;
+                this.classOfSoil = 6;
             }
 
         }
@@ -165,8 +165,8 @@ public class FarmManagementApp {
         private String name; // Nazwa farmy
         private String location; // Lokalizacja farmy
         private Double totalAreaInHectares; // Całkowita powierzchnia farmy w hektarach
-        private List<Field> fields; // Lista pól na farmie
-        private List<Crop> crops; // Lista upraw na farmie
+        private final  List<Field> fields; // Lista pól na farmie
+        private final  List<Crop> crops; // Lista upraw na farmie
 
         public Farm(String name, String location) { // Konstruktor klasy Farm
             this.name = name;
@@ -633,10 +633,13 @@ public class FarmManagementApp {
                     System.out.println();
                 }
                 case 5 -> { // Wyświetlenie przewidywanego plonu i zarobków dla wszystkich pól gdy użytkownik wybierze opcję 5
+                    Double totalExpectedEarnings = 0.0; // Inicjalizacja całkowitych oczekiwanych zarobków
                     for (Field field : currentFarm.getFields()) { // Pętla po wszystkich polach na farmie
                         Double expectedEarnings = field.predictedYield * field.crop.getPriceOnSell(); // Obliczenie oczekiwanych zarobków dla pola
+                        totalExpectedEarnings += expectedEarnings; // Dodanie oczekiwanych zarobków dla pola do całkowitych oczekiwanych zarobków
                         System.out.println("Field: " + field.getFieldName() + " - Predicted Yield: " + String.format("%.2f", field.predictedYield) + " tons, Expected Earnings: " + String.format("%.2f", expectedEarnings) + " PLN");
                     }
+                    System.out.println("Total expected earnings for all fields: " + String.format("%.2f", totalExpectedEarnings) + " PLN");
                     System.out.println();
 
                 }
@@ -723,7 +726,6 @@ public class FarmManagementApp {
                 }
                 case 0 -> {
                     System.out.println("Exiting...");
-                    scanner.close(); // Zamknięcie skanera przed zakończeniem programu
                     return; // Zakończenie programu gdy użytkownik wybierze opcję 0
                 }
                 default -> System.out.println("Invalid option. Please try again."); // Obsługa niepoprawnego wyboru użytkownika
