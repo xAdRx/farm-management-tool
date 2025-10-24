@@ -9,14 +9,14 @@ public class FarmManagementApp {
 
     public static class Crop { // Klasa reprezentująca uprawę
         private final String name; // Nazwa uprawy
-        private final  Double expectedYieldPerHectare; // Oczekiwany plon na hektar
-        private final  Double priceOnSell; // Cena sprzedaży za tonę
-        private final  Double fertilizerCostPerHectare; // Koszt nawozu na hektar
-        private final  Double limeCostPerHectare; // Koszt wapna na hektar
-        private final  Double seedCostPerHectare; // Koszt nasion na hektar
+        private final double expectedYieldPerHectare; // Oczekiwany plon na hektar
+        private final double priceOnSell; // Cena sprzedaży za tonę
+        private final double fertilizerCostPerHectare; // Koszt nawozu na hektar
+        private final double limeCostPerHectare; // Koszt wapna na hektar
+        private final double seedCostPerHectare; // Koszt nasion na hektar
 
-        public Crop(String name, Double expectedYieldPerHectare, Double priceOnSell, // Konstruktor klasy Crop
-                    Double fertilizerCostPerHectare, Double limeCostPerHectare, Double seedCostPerHectare) {
+        public Crop(String name, double expectedYieldPerHectare, double priceOnSell, // Konstruktor klasy Crop
+                    double fertilizerCostPerHectare, double limeCostPerHectare, double seedCostPerHectare) {
             this.name = name;
             this.expectedYieldPerHectare = expectedYieldPerHectare;
             this.priceOnSell = priceOnSell;
@@ -29,38 +29,38 @@ public class FarmManagementApp {
             return name;
         }
 
-        public Double getFertilizerCostPerHectare() {
+        public double getFertilizerCostPerHectare() {
             return fertilizerCostPerHectare;
         }
 
-        public Double getLimeCostPerHectare() {
+        public double getLimeCostPerHectare() {
             return limeCostPerHectare;
         }
 
-        public Double getSeedCostPerHectare() {
+        public double getSeedCostPerHectare() {
             return seedCostPerHectare;
         }
 
-        public Double getExpectedYieldPerHectare() {
+        public double getExpectedYieldPerHectare() {
             return expectedYieldPerHectare;
         }
 
-        public Double getPriceOnSell() {
+        public double getPriceOnSell() {
             return priceOnSell;
         }
     }
 
     public static class Field { // Klasa reprezentująca pole na farmie
         private String fieldName; // Nazwa pola
-        private Double areaInHectares; // Powierzchnia pola w hektarach
+        private double areaInHectares; // Powierzchnia pola w hektarach
         private Crop crop; // Uprawa na polu
-        private Boolean isSeeded; // Czy pole jest zasiane
-        private Boolean isFertilized; // Czy pole jest nawożone
-        private Boolean isLimed; // Czy pole jest wapnowane
-        private Integer classOfSoil; // Klasa gleby pola
-        private Double predictedYield; // Przewidywany plon pola
+        private boolean isSeeded; // Czy pole jest zasiane
+        private boolean isFertilized; // Czy pole jest nawożone
+        private boolean isLimed; // Czy pole jest wapnowane
+        private int classOfSoil; // Klasa gleby pola
+        private double predictedYield; // Przewidywany plon pola
 
-        public Field(String fieldName, Double areaInHectares, Integer classOfSoil, Crop crop) { // Konstruktor klasy Field
+        public Field(String fieldName, double areaInHectares, int classOfSoil, Crop crop) { // Konstruktor klasy Field
             this.fieldName = fieldName;
             this.areaInHectares = areaInHectares;
             this.crop = crop;
@@ -101,11 +101,11 @@ public class FarmManagementApp {
             this.fieldName = fieldName;
         }
 
-        public Double getAreaInHectares() { // Akcesor do powierzchni pola w hektarach
+        public double getAreaInHectares() { // Akcesor do powierzchni pola w hektarach
             return areaInHectares;
         }
 
-        public void setAreaInHectares(Double areaInHectares) { // Mutator do powierzchni pola w hektarach
+        public void setAreaInHectares(double areaInHectares) { // Mutator do powierzchni pola w hektarach
             this.areaInHectares = areaInHectares;
         }
 
@@ -125,20 +125,17 @@ public class FarmManagementApp {
             this.isLimed = isLimed;
         }
 
-        public void setClassOfSoil(Integer classOfSoil) { // Mutator do klasy gleby pola
+        public void setClassOfSoil(int classOfSoil) { // Mutator do klasy gleby pola
             if (classOfSoil < 1){ // Sprawdzenie, czy klasa gleby jest w zakresie 1-6
                 this.classOfSoil = 1;
             } else if (classOfSoil > 6){
                 this.classOfSoil = 6;
+            } else {
+                this.classOfSoil = classOfSoil;
             }
-
         }
 
-        public void setPredictedYield(Double predictedYield) { // Mutator do przewidywanego plonu pola
-            this.predictedYield = predictedYield;
-        }
-
-        public Double calculatePredictedYield() { // Metoda do obliczania przewidywanego plonu pola
+        public double calculatePredictedYield() { // Metoda do obliczania przewidywanego plonu pola
             double baseYield;
             switch (classOfSoil) { // Modyfikator plonu na podstawie klasy gleby
                 case 1 -> baseYield = 1.2; // najlepsza klasa gleby
@@ -158,15 +155,51 @@ public class FarmManagementApp {
             this.predictedYield = this.crop.getExpectedYieldPerHectare() * areaInHectares * baseYield * yieldModifier / 10; // Obliczenie przewidywanego plonu w tonach
             return this.predictedYield; // Zwrócenie przewidywanego plonu
         }
+
+        public Crop getCrop() {
+            return crop;
+        }
+
+        public boolean isSeeded() {
+            return isSeeded;
+        }
+
+        public boolean isFertilized() {
+            return isFertilized;
+        }
+
+        public boolean isLimed() {
+            return isLimed;
+        }
+
+        public int getClassOfSoil() {
+            return classOfSoil;
+        }
+
+        public double getPredictedYield() {
+            return predictedYield;
+        }
+
+        public boolean getIsSeeded() {
+            return isSeeded;
+        }
+
+        public boolean getIsFertilized() {
+            return isFertilized;
+        }
+
+        public boolean getIsLimed() {
+            return isLimed;
+        }
     }
 
 
     public static class Farm { // Klasa reprezentująca farmę
         private String name; // Nazwa farmy
         private String location; // Lokalizacja farmy
-        private Double totalAreaInHectares; // Całkowita powierzchnia farmy w hektarach
-        private final  List<Field> fields; // Lista pól na farmie
-        private final  List<Crop> crops; // Lista upraw na farmie
+        private double totalAreaInHectares; // Całkowita powierzchnia farmy w hektarach
+        private final List<Field> fields; // Lista pól na farmie
+        private final List<Crop> crops; // Lista upraw na farmie
 
         public Farm(String name, String location) { // Konstruktor klasy Farm
             this.name = name;
@@ -225,13 +258,13 @@ public class FarmManagementApp {
                 System.out.println("What do you want to edit?");
                 System.out.println("1. Change field name [" + field.getFieldName() + "]: ");
                 System.out.println("2. Change field areaInHectares [" + String.format("%.2f", field.getAreaInHectares()) + "]: ");
-                System.out.println("3. Change field classOfSoil [" + field.classOfSoil + "]: ");
-                System.out.println("4. Change if field is fertilized [" + field.isFertilized + "]: ");
-                System.out.println("5. Change if field is limed [" + field.isLimed + "]: ");
-                if(field.isSeeded) // Sprawdzenie, czy pole jest zasiane, aby wyświetlić odpowiednią informację
-                    System.out.println("6. Change if field is seeded [" + field.isSeeded + " " + field.crop.getName() + "]: ");
+                System.out.println("3. Change field classOfSoil [" + field.getClassOfSoil() + "]: ");
+                System.out.println("4. Change if field is fertilized [" + field.getIsFertilized() + "]: ");
+                System.out.println("5. Change if field is limed [" + field.getIsLimed() + "]: ");
+                if(field.getIsSeeded()) // Sprawdzenie, czy pole jest zasiane, aby wyświetlić odpowiednią informację
+                    System.out.println("6. Change if field is seeded [" + field.getIsSeeded() + " " + field.getCrop().getName() + "]: ");
                 else // Jeśli pole nie jest zasiane
-                    System.out.println("6. Change if field is seeded [" + field.isSeeded + "]: ");
+                    System.out.println("6. Change if field is seeded [" + field.getIsSeeded() + "]: ");
                 System.out.println("0. Back to field management menu");
                 System.out.print("Your choice: ");
                 int choice = scanner.nextInt(); // Odczyt wyboru użytkownika
@@ -245,7 +278,7 @@ public class FarmManagementApp {
                     }
                     case 2 -> { // Edycja powierzchni pola gdy użytkownik wybierze opcję 2
                         System.out.print("Enter new field area: ");
-                        Double area = scanner.nextDouble(); // Odczyt nowej powierzchni pola
+                        double area = scanner.nextDouble(); // Odczyt nowej powierzchni pola
                         field.setAreaInHectares(area); // Ustawienie nowej powierzchni pola
                         System.out.println("Field area updated successfully!");
                         field.calculatePredictedYield(); // Przeliczenie przewidywanego plonu po zmianie powierzchni
@@ -342,6 +375,16 @@ public class FarmManagementApp {
                     ", totalAreaInHectares=" + String.format("%.2f", totalAreaInHectares) +
                     '}';
         }
+
+        public void addCrop(Crop crop) {
+            if (crop != null) {
+                this.crops.add(crop);
+            }
+        }
+
+        public List<Crop> getCrops() {
+            return Collections.unmodifiableList(crops);
+        }
     }
 
     private static void randomizeFarmInfo() { // Metoda do losowego generowania informacji o farmie
@@ -359,11 +402,11 @@ public class FarmManagementApp {
     private static void addDefaultCropsToFarm() { // Metoda do dodawania domyślnych upraw do farmy
         System.out.println("Adding crops to the farm.");
         // Dodanie domyślnych upraw do listy upraw farmy
-        currentFarm.crops.add(new Crop("Pszenica", 5.2, 775.0, 150.0, 240.0, 220.0));
-        currentFarm.crops.add(new Crop("Kukurydza", 7.3, 896.0, 225.0, 320.0, 350.0));
-        currentFarm.crops.add(new Crop("Jeczmien", 5.0, 677.0, 150.0, 240.0, 200.0));
-        currentFarm.crops.add(new Crop("Rzepak", 4.1, 2364.0, 480.0, 180.0, 1300.0));
-        currentFarm.crops.add(new Crop("Trawa", 15.0, 400.0, 70.0, 100.0, 100.0));
+        currentFarm.addCrop(new Crop("Pszenica", 5.2, 775.0, 150.0, 240.0, 220.0));
+        currentFarm.addCrop(new Crop("Kukurydza", 7.3, 896.0, 225.0, 320.0, 350.0));
+        currentFarm.addCrop(new Crop("Jeczmien", 5.0, 677.0, 150.0, 240.0, 200.0));
+        currentFarm.addCrop(new Crop("Rzepak", 4.1, 2364.0, 480.0, 180.0, 1300.0));
+        currentFarm.addCrop(new Crop("Trawa", 15.0, 400.0, 70.0, 100.0, 100.0));
     }
 
     private static void createNewFarm() { // Metoda do tworzenia nowej farmy
@@ -473,7 +516,7 @@ public class FarmManagementApp {
             switch (choice) { // Obsługa wyboru użytkownika
                 case 1 -> { // Dodawanie nowego pola gdy użytkownik wybierze opcję 1
                     String fieldName = ""; // Inicjalizacja nazwy pola
-                    Double area = 0.0; // Inicjalizacja powierzchni pola
+                    double area = 0.0; // Inicjalizacja powierzchni pola
 
                     while (true) { // Pętla do wprowadzania unikalnej nazwy pola
                         System.out.print("Enter unique field name: ");
@@ -510,7 +553,11 @@ public class FarmManagementApp {
                         classOfSoil = 6; // Ustawienie klasy gleby na 6 jeśli jest większa niż 6
                     }
                     
-                    currentFarm.addField(new Field(fieldName, area, classOfSoil, currentFarm.crops.get(0))); // Dodanie nowego pola do farmy z domyślną uprawą
+                    Crop defaultCrop = currentFarm.getCrops().isEmpty() ? null : currentFarm.getCrops().get(0); // Pobranie domyślnej uprawy (pierwsza na liście) lub null jeśli lista jest pusta
+                    if (defaultCrop == null) {
+                        defaultCrop = new Crop("Pszenica", 5.2, 775.0, 150.0, 240.0, 220.0); // Utworzenie domyślnej uprawy jeśli lista jest pusta
+                    }
+                    currentFarm.addField(new Field(fieldName, area, classOfSoil, defaultCrop)); // Dodanie nowego pola do farmy z domyślną uprawą
                     System.out.println("Field added successfully!");
                     System.out.println("");
                 }
@@ -590,7 +637,7 @@ public class FarmManagementApp {
                     System.out.println();
                 }
                 case 2 -> { // Wyświetlenie wszystkich pól wymagających nawożenia gdy użytkownik wybierze opcję 2
-                    Double totalExpenses = 0.0; // Inicjalizacja całkowitych wydatków na nawozy
+                    double totalExpenses = 0.0; // Inicjalizacja całkowitych wydatków na nawozy
                     for (Field field : currentFarm.getFields()) { // Pętla po wszystkich polach na farmie
                         if (!field.isFertilized) { // Sprawdzenie, czy pole nie jest nawożone
                             System.out.println(field);
@@ -601,7 +648,7 @@ public class FarmManagementApp {
                     System.out.println();
                 }
                 case 3 -> { // Wyświetlenie wszystkich pól wymagających wapnowania gdy użytkownik wybierze opcję 3
-                    Double totalExpenses = 0.0; // Inicjalizacja całkowitych wydatków na wapno
+                    double totalExpenses = 0.0; // Inicjalizacja całkowitych wydatków na wapno
                     for (Field field : currentFarm.getFields()) { // Pętla po wszystkich polach na farmie
                         if (!field.isLimed) { // Sprawdzenie, czy pole nie jest wapnowane
                             System.out.println(field);
@@ -612,9 +659,9 @@ public class FarmManagementApp {
                     System.out.println();
                 }
                 case 4 -> { // Obliczenie wymaganych wydatków gdy użytkownik wybierze opcję 4
-                    Double totalExpenses = 0.0; // Inicjalizacja całkowitych wydatków
+                    double totalExpenses = 0.0; // Inicjalizacja całkowitych wydatków
                     for (Field field : currentFarm.getFields()) { // Pętla po wszystkich polach na farmie
-                        Double fieldExpenses = 0.0; // Inicjalizacja wydatków dla pola
+                        double fieldExpenses = 0.0; // Inicjalizacja wydatków dla pola
                         if (!field.isSeeded) { // Sprawdzenie, czy pole nie jest zasiane
                             fieldExpenses += field.areaInHectares * field.crop.getSeedCostPerHectare(); // Obliczenie wydatków na nasiona dla pola
                         }
@@ -633,9 +680,9 @@ public class FarmManagementApp {
                     System.out.println();
                 }
                 case 5 -> { // Wyświetlenie przewidywanego plonu i zarobków dla wszystkich pól gdy użytkownik wybierze opcję 5
-                    Double totalExpectedEarnings = 0.0; // Inicjalizacja całkowitych oczekiwanych zarobków
+                    double totalExpectedEarnings = 0.0; // Inicjalizacja całkowitych oczekiwanych zarobków
                     for (Field field : currentFarm.getFields()) { // Pętla po wszystkich polach na farmie
-                        Double expectedEarnings = field.predictedYield * field.crop.getPriceOnSell(); // Obliczenie oczekiwanych zarobków dla pola
+                        double expectedEarnings = field.predictedYield * field.crop.getPriceOnSell(); // Obliczenie oczekiwanych zarobków dla pola
                         totalExpectedEarnings += expectedEarnings; // Dodanie oczekiwanych zarobków dla pola do całkowitych oczekiwanych zarobków
                         System.out.println("Field: " + field.getFieldName() + " - Predicted Yield: " + String.format("%.2f", field.predictedYield) + " tons, Expected Earnings: " + String.format("%.2f", expectedEarnings) + " PLN");
                     }
@@ -726,7 +773,8 @@ public class FarmManagementApp {
                 }
                 case 0 -> {
                     System.out.println("Exiting...");
-                    return; // Zakończenie programu gdy użytkownik wybierze opcję 0
+                    scanner.close(); // Zamknięcie skanera przed zakończeniem programu
+                    return;
                 }
                 default -> System.out.println("Invalid option. Please try again."); // Obsługa niepoprawnego wyboru użytkownika
             }
