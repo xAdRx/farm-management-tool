@@ -11,10 +11,10 @@ import java.util.List;
  */
 public class FarmManagementAppTest {
 
-    private FarmManagementApp.Farm testFarm;
-    private FarmManagementApp.Crop testCropWheat;
-    private FarmManagementApp.Crop testCropCorn;
-    private FarmManagementApp.Field testField;
+    private Farm testFarm;
+    private Crop testCropWheat;
+    private Crop testCropCorn;
+    private Field testField;
 
     @BeforeEach
     void setUp() {
