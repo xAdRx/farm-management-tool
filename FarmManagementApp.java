@@ -409,6 +409,17 @@ public class FarmManagementApp {
         currentFarm.addCrop(new Crop("Trawa", 15.0, 400.0, 70.0, 100.0, 100.0));
     }
 
+    private static void createExampleFields() { // Metoda do tworzenia przykładowych pól na farmie
+        System.out.println("Creating example fields on the farm.");
+        // Dodanie przykładowych pól do farmy
+        currentFarm.addField(new Field("Pole1", 100.0, 1, currentFarm.getCrops().get(0)));
+        currentFarm.addField(new Field("Pole2", 100.0, 2, currentFarm.getCrops().get(0)));
+        currentFarm.addField(new Field("Pole3", 100.0, 3, currentFarm.getCrops().get(0)));
+        currentFarm.addField(new Field("Pole4", 100.0, 4, currentFarm.getCrops().get(0)));
+        currentFarm.addField(new Field("Pole5", 100.0, 5, currentFarm.getCrops().get(0)));
+        currentFarm.addField(new Field("Pole6", 100.0, 6, currentFarm.getCrops().get(0)));
+    }
+
     private static void createNewFarm() { // Metoda do tworzenia nowej farmy
         System.out.println("Would you like to create farm manually or randomize it?");
         System.out.println("1. Manually");
@@ -428,10 +439,16 @@ public class FarmManagementApp {
                 currentFarm = new Farm(name, location);
                 System.out.println("New farm created successfully!");
                 addDefaultCropsToFarm(); // Dodanie domyślnych upraw do nowo utworzonej farmy
+                System.out.println("Do you want to create example fields now? (yes/no): ");
+                String createFieldsChoice = scanner.next(); // Odczyt wyboru użytkownika
+                if (createFieldsChoice.equalsIgnoreCase("yes")) {
+                    createExampleFields();
+                }
             }
             case 2 -> {
                 randomizeFarmInfo(); // Losowe generowanie informacji o farmie gdy użytkownik wybierze opcję 2
                 addDefaultCropsToFarm(); // Dodanie domyślnych upraw do nowo utworzonej farmy
+                createExampleFields(); // Tworzenie przykładowych pól na farmie
             }
             default -> { // Obsługa niepoprawnego wyboru użytkownika
                 System.out.println("Invalid option.");
@@ -719,17 +736,6 @@ public class FarmManagementApp {
         System.out.println("=== 126031 ===");
         System.out.println("=== Adam Rajs ===");
         System.out.println();
-
-        randomizeFarmInfo(); // Utworzenie losowej farmy na start
-        addDefaultCropsToFarm(); // Dodanie domyślnych upraw do farmy
-
-        // Dodanie przykładowych pól do farmy
-        currentFarm.addField(new Field("Pole1", 100.0, 1, currentFarm.crops.get(0))); 
-        currentFarm.addField(new Field("Pole2", 100.0, 2, currentFarm.crops.get(0)));
-        currentFarm.addField(new Field("Pole3", 100.0, 3, currentFarm.crops.get(0)));
-        currentFarm.addField(new Field("Pole4", 100.0, 4, currentFarm.crops.get(0)));
-        currentFarm.addField(new Field("Pole5", 100.0, 5, currentFarm.crops.get(0)));
-        currentFarm.addField(new Field("Pole6", 100.0, 6, currentFarm.crops.get(0)));
 
         while (true) { // Główna pętla menu programu
             System.out.println("Menu Options:");
