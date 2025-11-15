@@ -733,8 +733,8 @@ public class FarmManagementApp {
     public static void main(String[] args) { // Główna metoda programu
 
         System.out.println("=== Farm Management Tool ===");
-        System.out.println("=== 126031 ===");
-        System.out.println("=== Adam Rajs ===");
+        System.out.println("===        126031        ===");
+        System.out.println("===       Adam Rajs      ===");
         System.out.println();
 
         while (true) { // Główna pętla menu programu
