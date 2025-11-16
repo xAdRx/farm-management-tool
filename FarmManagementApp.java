@@ -1,6 +1,8 @@
 import java.util.ArrayList; // Uzywane przy tworzeniu listy pól i upraw
 import java.util.Collections; // Uzywane do zwrocenia niemodyfikowalnej listy pól
 import java.util.List;  // Uzywane do definiowania listy pól i upraw
+import java.util.Map;  // Uzywane do definiowania do utworzenia HashMap'y
+import java.util.HashMap;  // Uzywane do definiowania mapy płodności ziemi
 import java.util.Scanner; // Potrzebne do zbierania danych wejsciowych od uzytkownika
 
 public class FarmManagementApp {
@@ -136,16 +138,16 @@ public class FarmManagementApp {
         }
 
         public double calculatePredictedYield() { // Metoda do obliczania przewidywanego plonu pola
-            double baseYield;
-            switch (classOfSoil) { // Modyfikator plonu na podstawie klasy gleby
-                case 1 -> baseYield = 1.2; // najlepsza klasa gleby
-                case 2 -> baseYield = 1.0; // bardzo dobra klasa gleby
-                case 3 -> baseYield = 0.8; // dobra klasa gleby
-                case 4 -> baseYield = 0.6; // srednia klasa gleby
-                case 5 -> baseYield = 0.4; // gorsza klasa gleby
-                case 6 -> baseYield = 0.2; // najgorsza klasa gleby
-                default -> baseYield = 0.2; // domyślnie najgorsza klasa gleby
+            Map<Integer, Double> classYieldMap = new HashMap<>(); // Mapa klas gleby do modyfikatorów plonu
+            for (int i = 0; i <6; i++){
+                double yield = 1.2 - (i * 0.2);
+                classYieldMap.put(i+1,yield);
             }
+
+            // Stworzy mape
+            // classYieldMap = { 1:1.2, 2:1.0, 3:0.8, 4:0.6, 5:0.4, 6:0.2 }
+
+            double baseYield = classYieldMap.get(classOfSoil); // Podstawowy modyfikator plonu na podstawie klasy gleby
 
             double yieldModifier = 1.0; // Modyfikator plonu na podstawie zabiegów agrotechnicznych
             if (isFertilized) yieldModifier += 0.2; // nawożenie zwiększa plon o 20%
